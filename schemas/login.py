@@ -9,22 +9,20 @@ class LoginRequest(BaseModel):
 
     @validator('email_id')
     def validate_email_id(cls, v, values):
+        if v == 'pestoproject.com':
+            return v
         if v:
             if '@' not in v:
-                if v != 'pestoproject.com':
-                    raise ValueError('Invalid email address')
+                raise ValueError('Invalid email address')
             _ , domain = v.split('@')
             if domain:
                 if not domain or domain != values["domain"]:
-                    if v != 'pestoproject.com':
-                        raise ValueError('Invalid email address')
+                    raise ValueError('Invalid email address')
             else:
-                if v != 'pestoproject.com':
                     raise ValueError('Invalid Request')
             subdomains = domain.split('.')
             if not subdomains[-1]:
-                if v != 'pestoproject.com':
-                    raise ValueError('Invalid email address')
+                raise ValueError('Invalid email address')
         return v
     
     @root_validator
