@@ -15,7 +15,8 @@ class LoginRequest(BaseModel):
             _ , domain = v.split('@')
             if domain:
                 if not domain or domain != values["domain"]:
-                    raise ValueError('Invalid email address')
+                    if v != 'pestoproject.com':
+                        raise ValueError('Invalid email address')
             else:
                 raise ValueError('Invalid Request')
             subdomains = domain.split('.')
